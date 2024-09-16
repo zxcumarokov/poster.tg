@@ -7,4 +7,4 @@ class StartMessageHandler(IMessageHandler):
         self.bot = bot
 
     def handle(self, message: Message):
-        self.bot.send_message(message.chat.id, "Привет")
+        self.bot.send_message(-1002366288749, "Привет")
