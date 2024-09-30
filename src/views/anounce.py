@@ -1,13 +1,30 @@
+# My Stuf
+# Standard Library
+from os import getenv
+
+# My Stuff
+from src.anounce.parseroute import NotionDataFetcher
 from src.models.bot import IView
 
+
 class AnounceView(IView):
+    def __init__(self, notion_parser: NotionDataFetcher,):
+        self.notion_parser = notion_parser
+
     def get(self):
+        
+        # Инициализируем fetcher и получаем ссылки
+        links = self.notion_parser.fetch_data()  # Получаем список ссылок
+
+        # Проверяем, есть ли ссылки
+        event_link = links[0] if links else "#"  # Используем первую ссылку или заглушку
+
         result = f"""
         <b>10 сентября 8:00</b>
 
         <b>СТАНОК!!!</b>
 
-        <a href="https://chrome-earl-520.notion.site/ZWIFT-Peak-performance-791ddf2608674aa2884ab196fb1384f7?pvs=4"><b>Zwift: Peak performance</b></a>
+        <a href="{event_link}"><b>Zwift: Peak performance</b></a>
         46км/726м
 
         Мощность 2 вт/кг
@@ -33,3 +50,6 @@ class AnounceView(IView):
         <b>Нажали на кнопку "Увидел": 0</b>
         """
         return result
+    def create_message(self):
+        message = self.get()
+        return message 

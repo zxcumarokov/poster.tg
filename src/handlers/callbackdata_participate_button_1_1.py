@@ -1,13 +1,9 @@
-# Third Party Stuff
+from src.models.bot import IMessageHandler
 from telebot import TeleBot
 from telebot.types import Message
 
-# My Stuff
-from src.models.bot import IMessageHandler
-
-
-class StartMessageHandler(IMessageHandler):
-    def __init__(self, bot: TeleBot,):
+class CallBackHandler(IMessageHandler):
+    def __init__(self, bot: TeleBot):
         self.bot = bot
 
     def handle(self, message: Message):
