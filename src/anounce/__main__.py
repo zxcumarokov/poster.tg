@@ -1,38 +1,18 @@
-# Standard Library
-from os import getenv
-
 # Third Party Stuff
-import telebot
-from dotenv import load_dotenv
+from telebot import TeleBot
 
 # My Stuff
-from src.anounce.parseroute import NotionDataFetcher
-from src.keyboards import SeenKeyboard
-from src.views import AnounceView
+from src.anounce.anounce_view import AnounceView
 
-load_dotenv()
-
-token = getenv('BOT_TOKEN')
-if not token:
-    raise ValueError('Token is not set')
-bot = telebot.TeleBot(token)
-
-channel_id = getenv('CHANNEL_ID')
-if not channel_id:
-    raise ValueError ('Channel Id is not set')
+anounce_bot = TeleBot("6491041620:AAERWwTDeFA31DM_FPLrd3Dsd8nFdNTZCLU")
+anounce_view = AnounceView()
 
 
+if __name__ == "__main__":
+    message_text = anounce_view.get()
 
-api_token = getenv('NOTION_API_TOKEN')
-database_id = getenv('NOTION_DATABASE_ID')
-fetcher = NotionDataFetcher(api_token, database_id)
-anounce_view = AnounceView(fetcher)
-seen_keyboard = SeenKeyboard()
-
-if __name__ == '__main__':
-    bot.send_message(
-        chat_id=channel_id, 
-        text=anounce_view.get(), 
+    anounce_bot.send_message(
+        chat_id="-1002366288749",
+        text=message_text,
         parse_mode="HTML",
-        reply_markup=seen_keyboard.get()
     )
