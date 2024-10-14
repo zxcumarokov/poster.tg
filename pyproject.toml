@@ -14,7 +14,10 @@ pytelegrambotapi = "^4.22.1"
 ruff = "^0.6.5"
 mypy = "^1.11.2"
 pydantic = "^2.9.2"
+pytest = "^8.3.3"
 
+[tool.pytest.ini_options]
+pythonpath = [".",]
 
 [build-system]
 requires = ["poetry-core"]
@@ -76,11 +79,7 @@ lint.ignore = [
 # lint.unfixable = ["B"]
 exclude = [
   'stubs/',
-  'bot/handlers.py',
   'trash/',
-  # 'bot/__main__.py',
-  'src/*',
-  'bot/mock/',
 ]
 
 [tool.ruff.lint.per-file-ignores]

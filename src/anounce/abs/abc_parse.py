@@ -6,10 +6,9 @@ from abc import (
 from datetime import datetime
 
 # My Stuff
-from src.models.notion_calendar.calendar import Ride
 
 
 class AbstractParseNotion(ABC):
     @abstractmethod
-    def parse(self, date: datetime) -> Ride:
-        raise NotImplementedError("Method get not implemented")
+    def parse(self, date: datetime) -> dict:
+        raise NotImplementedError("Method get not imple mented")

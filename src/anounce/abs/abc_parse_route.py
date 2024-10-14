@@ -3,12 +3,10 @@ from abc import (
     ABC,
     abstractmethod,
 )
-
-# My Stuff
-from src.models.notion_calendar.calendar import Ride
+from datetime import datetime
 
 
-class AbstractParseNotion:
+class AbstractParseRoute(ABC):
     @abstractmethod
-    def parse(self) -> Ride:
+    def parse(self, route_database_id: str) -> dict:
         raise NotImplementedError("Method get not imple mented")

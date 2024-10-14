@@ -7,8 +7,11 @@ from src.models.bot import IMessageHandler
 
 
 class StartMessageHandler(IMessageHandler):
-    def __init__(self, bot: TeleBot,):
+    def __init__(
+        self,
+        bot: TeleBot,
+    ):
         self.bot = bot
 
-    def handle(self, message: Message):
+    def handle(self, message: Message) -> None:
         self.bot.send_message(-1002366288749, "Привет")

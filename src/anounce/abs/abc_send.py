@@ -3,9 +3,13 @@ from abc import (
     ABC,
     abstractmethod,
 )
+from datetime import datetime
 
 
-class AbstractViev(ABC):
+class AbstractSend(ABC):
     @abstractmethod
-    def get(self) -> str:
+    def send(
+        self,
+        date: datetime,
+    ) -> None:
         raise NotImplementedError("Method get not implemented")
