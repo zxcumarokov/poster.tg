@@ -5,10 +5,10 @@ from abc import (
 )
 
 # My Stuff
-from src.models.notion_calendar.calendar import Ride
+from src.anounce.ride.model import Ride
 
 
-class AbstractCreateRide(ABC):
+class AbstractView(ABC):
     @abstractmethod
-    def create_ride(self, ride_properties: dict) -> Ride:
+    def get(self, ride: Ride) -> str:
         raise NotImplementedError("Method get not implemented")

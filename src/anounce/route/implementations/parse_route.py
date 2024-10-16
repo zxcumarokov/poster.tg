@@ -1,22 +1,21 @@
 # Standard Library
 import json
 from logging import getLogger
-from typing import Dict
 
 # Third Party Stuff
 import requests
 
-from .abs import AbstractParseRoute
+from ..abs import AbstractParseRoute
 
 
 class ParseRouteData(AbstractParseRoute):
     def __init__(
         self,
-        base_url: str,
-        token: str,
+        notion_base_url: str,
+        notion_token: str,
     ):
-        self.base_url = base_url
-        self.token = token
+        self.base_url = notion_base_url
+        self.token = notion_token
         self.logger = getLogger(__name__)
 
     def parse(self, route_database_id: str) -> dict:
@@ -30,6 +29,8 @@ class ParseRouteData(AbstractParseRoute):
         self.logger.debug(f"Headers: {headers}")
 
         response = requests.get(url=url, headers=headers, timeout=10)
+
+        self.logger.debug(f"Response: {response.text}")
 
         if response.status_code != 200:
             raise ValueError(

@@ -7,10 +7,11 @@ from typing import Dict
 # Third Party Stuff
 import requests
 
-from .abs import AbstractParseNotion
+# My Stuff
+from src.anounce.ride.abs import AbstractRequestRide
 
 
-class ParseNotion(AbstractParseNotion):
+class RequestRide(AbstractRequestRide):
     def __init__(
         self,
         url: str,

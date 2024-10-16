@@ -1,10 +1,18 @@
 # My Stuff
 from src.anounce.anounce_view import AnounceView
-from src.models.notion_calendar.calendar import Ride
-from src.models.notion_calendar.route import Route
+from src.anounce.ride import Ride
+from src.anounce.route import Route
 
 
 def test_view() -> None:
+    route = Route(
+        distance=22,
+        climbing=52,
+        route_name="route_name",
+        coffee_break="coffee_break",
+        day_segment="day_segment",
+        start_place="start_place",
+    )
     ride = Ride(
         training_name="training_name",
         date="date",
@@ -18,17 +26,9 @@ def test_view() -> None:
         gest_ures="gest_ures",
         post_scriptum="post_scriptum",
         route_id="route_id",
-    )
-
-    roate = Route(
-        distance=22,
-        set_count=52,
-        route_name="route_name",
-        coffee_break="coffee_break",
-        day_segment="day_segment",
-        start_place="start_place",
+        route=route,
     )
 
     anounce_view = AnounceView()
-    message_text = anounce_view.get(ride, roate)
+    message_text = anounce_view.get(ride=ride, route=route)
     assert message_text

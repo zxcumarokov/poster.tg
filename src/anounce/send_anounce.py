@@ -6,11 +6,17 @@ from datetime import datetime
 from dotenv import load_dotenv
 from telebot import TeleBot
 
-from .abs import (
+# My Stuff
+from src.anounce.ride.abs import (
     AbstractCreateRide,
+    AbstractRequestRide,
+)
+from src.anounce.route.abs import (
     AbstractCreateRoute,
-    AbstractParseNotion,
     AbstractParseRoute,
+)
+
+from .abs import (
     AbstractSend,
     AbstractView,
 )
@@ -28,14 +34,14 @@ class SendAnounce(AbstractSend):
         anounce_bot: TeleBot,
         anounce_view: AbstractView,
         create_ride: AbstractCreateRide,
-        notion_parser: AbstractParseNotion,
+        parse_ride: AbstractRequestRide,
         create_route: AbstractCreateRoute,
         parse_route: AbstractParseRoute,
     ):
         self.anounce_bot = anounce_bot
         self.anounce_view = anounce_view
         self.create_ride = create_ride
-        self.notion_parser = notion_parser
+        self.parse_ride = parse_ride
         self.create_route = create_route
         self.parse_route = parse_route
 
@@ -43,11 +49,11 @@ class SendAnounce(AbstractSend):
         self,
         date: datetime,
     ) -> None:
-        ride_properties = self.notion_parser.parse(date)
-        ride = self.create_ride.create_ride(ride_properties)
+        ride_properties = self.parse_ride.parse(date)
+        ride = self.create_ride.create(ride_properties)
         response_route_properties = self.parse_route.parse(ride.route_id)
-        route = self.create_route.create_route(response_route_properties)
-        message_text = self.anounce_view.get(ride, route)
+        ride.route = self.create_route.create_route(response_route_properties)
+        message_text = self.anounce_view.get(ride)
 
         self.anounce_bot.send_message(
             chat_id=os.getenv("CHANNEL_ID", ""),

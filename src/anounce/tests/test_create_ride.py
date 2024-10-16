@@ -1,5 +1,5 @@
 # My Stuff
-from src.anounce.create_ride import CreateRide
+from src.anounce.ride.implementations import CreateRide
 
 
 def test_create_ride() -> None:
@@ -32,7 +32,7 @@ def test_create_ride() -> None:
     create_ride = CreateRide()
 
     # Передаем словарь в метод create_ride
-    ride = create_ride.create_ride(ride_properties)
+    ride = create_ride.create(ride_properties)
 
     # Проверяем, что объект ride был создан
     assert ride

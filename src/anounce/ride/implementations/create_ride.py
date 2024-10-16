@@ -1,13 +1,14 @@
-# Standard Library
-
 # My Stuff
-from src.models.notion_calendar.calendar import Ride
+from src.anounce.ride.model import Ride
 
-from .abs import AbstractCreateRide
+from ..abs import AbstractCreateRide
 
 
 class CreateRide(AbstractCreateRide):
-    def create_ride(self, ride_properties: dict) -> Ride:
+    def create(
+        self,
+        ride_properties: dict,
+    ) -> Ride:
         _type_of_training = ride_properties["Тип тренировки"]["select"]["name"]
         _date = ride_properties["Date"]["date"]["start"]
         _route_id = ride_properties["Маршрут"]["relation"][0]["id"]
@@ -46,4 +47,5 @@ class CreateRide(AbstractCreateRide):
             post_scriptum=_post_scriptum,
             route_id=_route_id,
         )
+
         return _ride

@@ -3,10 +3,12 @@ from abc import (
     ABC,
     abstractmethod,
 )
-from datetime import datetime
+
+# My Stuff
+from src.anounce.ride import Ride
 
 
-class AbstractParseRoute(ABC):
+class AbstractCreateRide(ABC):
     @abstractmethod
-    def parse(self, route_database_id: str) -> dict:
+    def create(self, ride_properties: dict) -> Ride:
         raise NotImplementedError("Method get not imple mented")

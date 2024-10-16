@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import Dict
 
 
-class AbstractParseNotion(ABC):
+class AbstractRequestRide(ABC):
     @abstractmethod
     def parse(self, date: datetime) -> Dict:
         raise NotImplementedError("Method get not implemented")

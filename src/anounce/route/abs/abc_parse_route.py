@@ -3,12 +3,9 @@ from abc import (
     ABC,
     abstractmethod,
 )
-from datetime import datetime
-
-# My Stuff
 
 
-class AbstractParseNotion(ABC):
+class AbstractParseRoute(ABC):
     @abstractmethod
-    def parse(self, date: datetime) -> dict:
+    def parse(self, route_database_id: str) -> dict:
         raise NotImplementedError("Method get not imple mented")

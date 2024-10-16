@@ -1,7 +1,8 @@
 # Third Party Stuff
 from pydantic import BaseModel
 
-from .route import Route
+# My Stuff
+from src.anounce.route import Route
 
 
 class Ride(BaseModel):
@@ -17,4 +18,4 @@ class Ride(BaseModel):
     gest_ures: str
     post_scriptum: str
     route_id: str
-    route: Route
+    route: Route | None = None

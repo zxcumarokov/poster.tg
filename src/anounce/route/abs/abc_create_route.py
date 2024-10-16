@@ -5,10 +5,10 @@ from abc import (
 )
 
 # My Stuff
-from src.models.notion_calendar.route import Route
+from src.anounce.route import Route
 
 
 class AbstractCreateRoute(ABC):
     @abstractmethod
     def create_route(self, route_properties: dict) -> Route:
-        raise NotImplementedError
+        raise NotImplementedError("Method get not imple mented")

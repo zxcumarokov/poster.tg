@@ -4,6 +4,7 @@ from datetime import (
     datetime,
     timezone,
 )
+from logging import basicConfig
 
 # Third Party Stuff
 from dotenv import load_dotenv
@@ -11,12 +12,15 @@ from telebot import TeleBot
 
 # My Stuff
 from src.anounce.anounce_view import AnounceView
-from src.anounce.get_route_id import GetRouteId
-from src.anounce.parse_route import ParseRouteData
+from src.anounce.ride.implementations import (
+    CreateRide,
+    RequestRide,
+)
+from src.anounce.route.implementations import (
+    CreateRoute,
+    ParseRouteData,
+)
 
-from .create_ride import CreateRide
-from .create_route import CreateRoute
-from .parse_notion import ParseNotion
 from .send_anounce import SendAnounce
 
 load_dotenv()
@@ -26,32 +30,40 @@ if not anounce_bot:
 calendar_url = os.getenv("CALENDAR_URL")
 calendar_id = os.getenv("CALENDAR_ID")
 url = f"{calendar_url}{calendar_id}"
-token = os.getenv("NOTION_TOKEN", "")
+token = os.getenv("NOTION_TOKEN")
 if not token:
     raise ValueError("NOTION_TOKEN не установлен или пуст.")
 notion_version = "2022-02-22"
 dt = datetime.strptime("2024-10-02", "%Y-%m-%d").replace(tzinfo=timezone.utc)
-
+notion_token = os.getenv("NOTION_TOKEN")
+if not notion_token:
+    raise ValueError("NOTION_TOKEN не установлен или пуст.")
+notion_base_url = os.getenv("NOTION_BASE_URL")
+if not notion_base_url:
+    raise ValueError("NOTION_BASE_URL не установлен или пуст.")
 anounce_view = AnounceView()
 create_ride = CreateRide()
 
-get_route_id = GetRouteId(create_ride.ride_properties)
-notion_parser = ParseNotion(
+parse_ride = RequestRide(
     url=url,
     token=token,
     notion_version=notion_version,
 )
 create_route = CreateRoute()
-parse_route = ParseRouteData()
+parse_route = ParseRouteData(notion_base_url=notion_base_url, notion_token=notion_token)
 
 send_anounce = SendAnounce(
     anounce_bot=anounce_bot,
     anounce_view=anounce_view,
     create_ride=create_ride,
-    notion_parser=notion_parser,
+    parse_ride=parse_ride,
     create_route=create_route,
     parse_route=parse_route,
 )
 
 if __name__ == "__main__":
+    basicConfig(
+        level="DEBUG",
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    )
     send_anounce.send(date=dt)
