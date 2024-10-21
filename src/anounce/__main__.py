@@ -1,5 +1,7 @@
+# Standard Librar
 # Standard Library
 import os
+from datetime import timedelta  # Добавляем для работы с временем
 from datetime import (
     datetime,
     timezone,
@@ -34,7 +36,11 @@ token = os.getenv("NOTION_TOKEN")
 if not token:
     raise ValueError("NOTION_TOKEN не установлен или пуст.")
 notion_version = "2022-02-22"
-dt = datetime.strptime("2024-10-02", "%Y-%m-%d").replace(tzinfo=timezone.utc)
+
+# Получаем текущую дату и прибавляем один день
+current_date = datetime.now(timezone.utc)
+next_day = current_date + timedelta(days=1)
+
 notion_token = os.getenv("NOTION_TOKEN")
 if not notion_token:
     raise ValueError("NOTION_TOKEN не установлен или пуст.")
@@ -66,4 +72,5 @@ if __name__ == "__main__":
         level="DEBUG",
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
-    send_anounce.send(date=dt)
+    # Отправляем данные на следующий день
+    send_anounce.send(date=next_day)

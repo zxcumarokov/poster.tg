@@ -1,0 +1,9 @@
+name: poster_tg
+services:
+  poster_tg:
+    build:
+      context: .
+    platform: linux/amd64
+    image: zxcumarokov/sumarokov:latest
+    ports:
+      - 8080:8080
