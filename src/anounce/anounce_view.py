@@ -22,9 +22,10 @@ class AnounceView(AbstractView):
             raise AnounceViewNoRouteError("Route not found")
 
         message_text = (
+            f"{ride.training_name}\n"
             f"{formatted_time_utc}\n\n"
             f"{ride.type_of_training}\n\n"
-            f"{ride.workout_app}: {ride.training_name}\n"
+            f"{ride.workout_app}: \n"
             f"Расстояние: {self._prepare_text(ride.route.distance)} км\n"
             f"Набор: {self._prepare_text(ride.route.climbing)}\n"
             f"Кофе-брейк: {self._prepare_text(ride.route.coffee_break)}\n"
