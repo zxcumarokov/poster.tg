@@ -1,6 +1,7 @@
 # Standard Library
 import os
 from datetime import datetime
+from logging import getLogger
 
 # Third Party Stuff
 from dotenv import load_dotenv
@@ -44,6 +45,7 @@ class SendAnounce(AbstractSend):
         self.parse_ride = parse_ride
         self.create_route = create_route
         self.parse_route = parse_route
+        self.logger = getLogger(__name__)
 
     def send(
         self,
@@ -53,6 +55,7 @@ class SendAnounce(AbstractSend):
         ride = self.create_ride.create(ride_properties)
         response_route_properties = self.parse_route.parse(ride.route_id)
         ride.route = self.create_route.create_route(response_route_properties)
+        self.logger.debug(f"ride.route: {ride.route}")
         message_text = self.anounce_view.get(ride)
 
         self.anounce_bot.send_message(
